@@ -1,0 +1,120 @@
+.iconify {
+    width: 16px;
+    height: 16px;
+}
+
+.navbar {
+    background-color: #d0e0eb;
+    color: #49708a;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.filecell {
+    cursor: pointer;
+}
+
+.nav-link {
+    font-weight: bold;
+    color: #49708a;
+    cursor: pointer;
+}
+
+.nav-item :hover {
+    font-weight: bold;
+    color: #286090;
+    cursor: pointer;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8, %3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(40, 96, 144)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.formheading {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 70px;
+    color: #2c2c2c;
+}
+
+.modalheading {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    color: #2c2c2c;
+}
+
+.tablewrapp select {
+    width: 120px;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    /* white-space: pre; */
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    background-color: rgb(0, 112, 192);
+}
+
+.tablewrapp td select {
+    color: white;
+}
+
+.table>tbody>tr>td {
+    vertical-align: middle;
+}
+
+.tablewrapp th {
+    white-space: nowrap;
+    font-weight: lighter;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tablewrapp td {
+    text-align: center;
+    background-color: rgb(0, 112, 192);
+    color: white;
+}
+
+input {
+    color: #2c2c2c
+}
+
+input[type="file"] {
+    color: #2c2c2c;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+select option,
+select {
+    background-color: white;
+    color: #2c2c2c
+}
+
+select option[value="Not Started"],
+select.o1 {
+    background-color: rgb(0, 112, 192);
+}
+
+select option[value="In Progress"],
+select.o2 {
+    background-color: rgb(255, 192, 0);
+}
+
+select option[value="Delayed"],
+select.o3 {
+    background-color: rgb(255, 0, 0);
+}
+
+select option[value="Completed"],
+select.o3 {
+    background-color: rgb(0, 176, 80);
+}

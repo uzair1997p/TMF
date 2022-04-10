@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="./tablestyle.css">
+
+    <script>
+        const Http = new XMLHttpRequest();
+        const url = '/graphdata';
+        Http.open("GET", url);
+        Http.send();
+        window.onload = function() {
+
+            var Data = JSON.parse(Http.responseText);
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Customer & No of Orders chart",
+                    horizontalAlign: "left"
+                },
+                data: [{
+                    type: "doughnut",
+                    startAngle: 60,
+                    //innerRadius: 60,
+                    indexLabelFontSize: 17,
+                    indexLabel: "{label} - #percent%",
+                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                    dataPoints: Data
+                }]
+            });
+            chart.render();
+        }
+    </script>
+</head>
+
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- For icons -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    <nav class="navbar  sticky-top navbar-expand-lg ">
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon navbaricon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Open</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/completed">Completed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/newcustomer">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/graph">Graph</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- <div class="row m-4">
+        <div class="col-md-12">
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="p-4">
+                    <div class="col-md-12 p-4">
+                        <button id="logout_btn" type="button" class="btn pull-right btn-danger ml-4">Logout</button>
+                        <button id="completed_page_nav" type="button" class="btn pull-right btn-primary ml-4">Completed Orders</button>
+                        <button id="open_page_nav" type="button" class="btn pull-right btn-primary ml-4">Open Orders</button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar pull-left">
+                <button class="btn btn-primary pull-left" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+            </button>
+            </nav>
+        </div>
+    </div> -->
+    <div class="row m-4">
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    </div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="text/javascript">
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// UPLOAD CUSTOMER'S LOGO /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function uploadlogo() {
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "file");
+            x.setAttribute("id", "tempfileupload");
+            // x.style.display = 'none'; // set anchor as hidden
+            document.body.appendChild(x);
+            x.click();
+            $("#tempfileupload").change(function() {
+                //console.log("hurray");
+                var ajax = new XMLHttpRequest();
+                var formdata = new FormData();
+                formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
+                ajax.open("POST", "/uploadlogo");
+                ajax.send(formdata);
+                // $.post("/uploadlogo", tempdata,
+                //     function(tempdata, status) {
+                //         console.log("data: ", tempdata, "status: ", status);
+                //     });
+                // return true;
+                $('#tempfileupload').remove();
+            });
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////// CUSTOMER PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#new_customer_nav").click(function() {
+            location.replace("/newcustomer");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#open_page_nav").click(function() {
+            location.replace("/home");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#completed_page_nav").click(function() {
+            location.replace("/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// LOGOUT BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#logout_btn").click(function() {
+            location.replace("/logout");
+        });
+    </script>
+</body>
+
+</html>

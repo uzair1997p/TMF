@@ -1,0 +1,102 @@
+// MongoDB Playground
+// To disable this template go to Settings | MongoDB | Use Default Template For Playground.
+// Make sure you are connected to enable completions and to be able to run a playground.
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+// Select the database to use.
+use('CPM');
+
+// The drop() command destroys all data from a collection.
+// Make sure you run it against proper database and collection.
+db.orders.drop();
+
+// Insert a few documents into the sales collection.
+db.orders.insertMany([
+  {'sr_no' : 1,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 2,  'customer_name' : "Ford",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 3,  'customer_name' : "MG. Motors",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 4,  'customer_name' : "BMW. Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Completed",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 5,  'customer_name' : "Changan",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 6,  'customer_name' : "Changan",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 7,  'customer_name' : "Ford",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 8,  'customer_name' : "Changan",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Completed",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 9,  'customer_name' : "BMW. Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+  {'sr_no' : 10,  'customer_name' : "Ford",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 1},
+
+  {'sr_no' : 1,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 2},
+  {'sr_no' : 2,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 2},
+  {'sr_no' : 3,  'customer_name' : "Napeleon Washnfill Inc",  'product_name': "1500 Windshield Stickers", 'codes': "Not Started",  'code_date': new Date('2014-03-01'),  'design' : "Not Started",  'design_date' : new Date('2014-03-01'),  'design_approval' : "Not Started",  'design_approval_date' : new Date('2014-03-01'),  'send_to_printer' : "Not Started",  'send_to_printer_date' : new Date('2014-03-01'),  'proof_approval' : "Not Started",  'proof_approval_date' : new Date('2014-03-01'),  'shipping' : "Not Started",  'ship_date' : new Date('2014-03-01'),  'received' : "Not Started",  'received_date' : new Date('2014-03-01'),  'completed' : "Not Started",  'notes' : "Not Started",  'printing' : "Not Started",  'printing_date' : new Date('2014-03-01'), 'stapling' : "Not Started",  'stapling_date' : new Date('2014-03-01'), 'file':"", 'user_id' : 2},
+]);
+
+db.columns.drop();
+
+db.columns.insertMany([
+{"sr_no":0,"column_name":"▬","column_type":"text","order_type":"C","user_id":1},
+{"sr_no":1,"column_name":"customer_name","column_type":"text","order_type":"C","user_id":1},
+{"sr_no":2,"column_name":"product_name","column_type":"text","order_type":"C","user_id":1},
+{"sr_no":3,"column_name":"codes","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":4,"column_name":"code_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":5,"column_name":"design","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":6,"column_name":"design_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":7,"column_name":"design_approval","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":8,"column_name":"design_approval_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":9,"column_name":"printing","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":10,"column_name":"printing_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":11,"column_name":"stapling","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":12,"column_name":"stapling_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":13,"column_name":"shipping","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":14,"column_name":"ship_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":15,"column_name":"received","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":16,"column_name":"received_date","column_type":"date","order_type":"C","user_id":1},
+{"sr_no":17,"column_name":"completed","column_type":"dropdown","order_type":"C","user_id":1},
+{"sr_no":18,"column_name":"file","column_type":"text","order_type":"C","user_id":1}
+]);
+
+db.columns.insertMany([
+  {"sr_no": 0,  "column_name": "▬",  "column_type": "text",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 1,  "column_name": "customer_name",  "column_type": "text",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 2,  "column_name": "product_name",  "column_type": "text",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 3,  "column_name": "codes",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 4,  "column_name": "code_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 5,  "column_name": "design",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 6,  "column_name": "design_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 7,  "column_name": "design_approval",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 8,  "column_name": "design_approval_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 9,  "column_name": "send_to_printer",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 10,  "column_name": "send_to_printer_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 11,  "column_name": "proof_approval",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 12,  "column_name": "proof_approval_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 13,  "column_name": "shipping",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 14,  "column_name": "ship_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 15,  "column_name": "received",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 16,  "column_name": "received_date",  "column_type": "date",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 17,  "column_name": "completed",  "column_type": "dropdown",  "order_type": "I",  "user_id": 1},
+  {"sr_no": 18,  "column_name": "notes",  "column_type": "text",  "order_type": "I", "user_id": 1},
+  {"sr_no": 19,  "column_name": "file",  "column_type": "text",  "order_type": "I",  "user_id": 1
+  }]);
+
+db.orders.deleteMany({user_id : 2});
+
+db.orders.aggregate(
+    [ 
+        { "$match": { 'user_id': 1 }},
+        { "$group":  { "_id": "$customer_name", "count": { "$sum": 1 } } },
+        { '$replaceWith': { 'label': "$_id" , 'y' : '$count'} }
+        
+    ]
+)
+
+
+db.orders.find({user_id : Number('1')});
+// Run a find command to view items sold on April 4th, 2014.
+db.orders.find({ user_id: 1 });
+
+
+db.customers.find({user_id : 1},{ user_id: 1, _id : 0 }); // Showing specific columns, first json for where condition, second for columns. 1 means show, 0 means hide.
+
+// Run an aggregation to view total sales for each product in 2014.
+const aggregation = [
+  { $match: { date: { $gte: new Date('2014-01-01'), $lt: new Date('2015-01-01') } } },
+  { $group: { _id : '$item', totalSaleAmount: { $sum: { $multiply: [ '$price', '$quantity' ] } } } }
+];
+db.sales.aggregate(aggregation);

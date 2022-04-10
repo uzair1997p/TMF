@@ -1,0 +1,980 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Order-Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="./tablestyle.css">
+
+</head>
+
+<body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- For icons -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <!-- <p class="navbar-brand">Welcome </p> -->
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon navbaricon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Open</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/completed">Completed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/newcustomer">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/graph">Graph</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="#" onclick="uploadlogo()" style="display: inline;">Upload logo <span class="iconify" data-icon="mdi:cloud-upload" data-inline="false"></span></a>
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-md-4 p-4">
+                <img style="max-height: 20vh; max-width: 30vh;" id="storename" alt="Home Page">
+            </div>
+            <div class="col-md-4 p-4">
+                <table class="table table-bordered table-striped table-inverse ">
+                    <thead>
+                        <td colspan="4" style="text-align: center;">Status Legend</td>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="color:honeydew; background-color: rgb(0, 112, 192);">Not Started</td>
+                            <td style="color:honeydew; background-color: rgb(255, 192, 0);">In Progress</td>
+                            <td style="color:honeydew; background-color: rgb(255, 0, 0);">Delayed</td>
+                            <td style="color:honeydew; background-color: rgb(0, 176, 80);">Complete</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="col-md-4 p-4">
+                <button id="logout_btn" type="button" class="btn pull-right btn-danger">Logout</button>
+            </div> -->
+        </div>
+
+        <div class="row">
+
+            <!-- <div class="col-md-6 p-4">
+                <button id="graph_btn" type="button" class="btn pull-right btn-success ml-4">Graph</button>
+                <button id="completed_page_nav" type="button" class="btn pull-right btn-primary">Completed Orders</button>
+            </div> -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="modalheading">Open Orders</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 p-4">
+                <input style="display: inline !important;" type="text" class="form-control mr-2" id="customer_search" onkeyup="searchcustomer()" placeholder="Search customer">
+            </div>
+            <div class="col-md-6 p-4">
+                <button type="button" class="btn btn-success ml-4 mb-2 pull-right" onclick="submit()">
+                    <span class="iconify" data-icon="mdi:floppy" data-inline="false"></span> Save
+                </button>
+                <button type="button" class="btn btn-primary ml-4 mb-2 pull-right" data-toggle="modal" data-target="#colModal">
+                    <span class="iconify" data-icon="mdi:plus-minus" data-inline="false"></span> Add/Remove Column
+                </button>
+                <button type="button" class="btn btn-primary mb-2 pull-right" data-toggle="modal" data-target="#rowModal">
+                   <span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Row 
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table id="mtable" class="table table-bordered tablewrapp">
+                    <thead id="mtableheader" class="thead-light">
+                    </thead>
+                    <tbody></tbody>
+            </div>
+        </div>
+    </div>
+
+
+    <!--////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////// ADD ROW MODAL ///////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <!-- The Modal -->
+    <div class="modal" id="rowModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title modalheading">Add row</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="customer_name"><span class="iconify" data-icon="mdi:account" data-inline="false"></span> Customer Name</label>
+                    <select class="form-control" name="general_dropdown" id="customers_dd"></select>
+                    <!-- <input id="row_modal_customer_name" class="form-control" id="customer_name" placeholder="Customer Name"> -->
+                    <label class="mt-4" for="product_name"><span class="iconify" data-icon="mdi:dropbox" data-inline="false"></span> Product</label>
+                    <input id="row_modal_product_name" class="form-control" id="product_name" placeholder="Product">
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="add_row_modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Row</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--///////////////////////////////////// ADD or REMOVE COLUMN MODAL /////////////////////////////////////-->
+    <!--//////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <!-- The Modal -->
+    <div class="modal" id="colModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title modalheading">Add / Remove column</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="column_name"><span class="iconify" data-icon="mdi:page-layout-header" data-inline="false"></span> Column title</label>
+                    <input id="col_modal_column_name" class="form-control" id="customer_name" placeholder="Column Name">
+
+                    <label class="mt-4" for="general_dropdown"><span class="iconify" data-icon="mdi:arrow-down-drop-circle" data-inline="false"></span> Column type</label>
+                    <select class="form-control" name="general_dropdown" id="col_modal_select">
+                        <option value="date">Date</option>
+                        <option value="dropdown">Dropdown</option>
+                        <option value="text">Text</option>
+                    </select>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="add_col_modal" type="button" class="btn btn-success" data-dismiss="modal"><span class="iconify" data-icon="mdi:plus" data-inline="false"></span> Add Column</button>
+                    <button id="del_col_modal" type="button" class="btn btn-danger" data-dismiss="modal"><span class="iconify" data-icon="mdi:delete" data-inline="false"></span> Delete Column</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <script type="text/javascript">
+        // function fileupdated(file_form) {
+        //     // $(e).closest("tr")
+        //     $(file_form).parent().submit();
+        // }
+
+
+
+        var user_identity = "";
+        var tbl_cols = {};
+        var completed_orders_ = {};
+        var open__orders_ = {};
+        var customers_list = [];
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// UPLOAD CUSTOMER'S LOGO /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function uploadlogo() {
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "file");
+            x.setAttribute("id", "tempfileupload");
+            // x.style.display = 'none'; // set anchor as hidden
+            document.body.appendChild(x);
+            $("#tempfileupload").css("display", 'none');
+            x.click();
+            $("#tempfileupload").change(function() {
+                var ajax = new XMLHttpRequest();
+
+                var formdata = new FormData();
+                formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
+                ajax.open("POST", "/uploadlogo", false);
+                ajax.send(formdata);
+                if (ajax.status === 400) {
+                    alert("Invalid Extension");
+                }
+
+                $('#tempfileupload').remove();
+                location.reload();
+            });
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////// CUSTOMER PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#new_customer_nav").click(function() {
+            location.replace("/newcustomer");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#completed_page_nav").click(function() {
+            location.replace("/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("/graph");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// LOGOUT BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#logout_btn").click(function() {
+            location.replace("/logout");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// ADD ROW ON CLICK FUNC //////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#add_row_modal').click(function() {
+            if ($('#row_modal_product_name').val()) {
+                var employee_data = '';
+                employee_data += '<tr>';
+                employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+                var counter = 0;
+                Object.keys(tbl_cols).forEach(function(key) {
+                    if (key.localeCompare("▬") !== 0) {
+                        if (key.localeCompare("completed") === 0) {
+                            employee_data += '<td>' + completed_drop_down('') + '</td>';
+                        } else if (key.localeCompare("file") === 0) {
+                            employee_data += '<td>' + files_drop_down('Attachment_1') + '</td>';
+                        } else if (tbl_cols[key].localeCompare("text") === 0) {
+                            employee_data += make_text_field('');
+                        } else if (tbl_cols[key].localeCompare("date") === 0) {
+                            employee_data += '<td>' + make_date_selector('') + '</td>';
+                        } else {
+                            employee_data += '<td>' + make_drop_down('') + '</td>';
+                        }
+                    }
+                });
+                $('#mtable').append(employee_data);
+
+                // $('#mtable tbody').append($("#mtable tbody tr:last").clone());
+                $('#mtable tbody tr:last td:nth-child(2)').html($('#customers_dd :selected').val());
+                $('#mtable tbody tr:last td:nth-child(3)').html($('#row_modal_product_name').val());
+            } else {
+                alert("Please enter product name");
+            }
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////// ADD COL ON CLICK FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#add_col_modal').click(function() {
+            if ($('#col_modal_column_name').val()) {
+                $('#mtable tr:first').append($("<th>"));
+                $('#mtable tr').not(':first').append($("<td>"));
+                $('#mtable thead tr>th:last').html($('#col_modal_column_name').val().toUpperCase());
+                /*
+                 *adding column to completed orders array
+                 */
+                var orders_arr = completed_orders_;
+
+
+                //
+                Object.keys(orders_arr).forEach(function(key) {
+                    var temp = $('#col_modal_column_name').val().toLowerCase();
+                    temp = temp.replace(/ /g, "_");
+                    orders_arr[key][temp] = "";
+                });
+
+                completed_orders_ = orders_arr;
+                // console.log("\n COLUMN ADDED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+
+                if ($('#col_modal_select').val().localeCompare('date') === 0) {
+                    $('#mtable tbody tr').each(function() {
+                        $(this).children('td:last').append(make_date_selector(''));
+                    });
+                } else if ($('#col_modal_select').val().localeCompare('text') === 0) {
+                    $('#mtable tbody tr').each(function() {
+                        $(this).children('td:last').append(make_text_field(''));
+                    });
+                } else {
+                    $('#mtable tbody tr').each(function() {
+                        $(this).children('td:last').append(make_drop_down(''));
+                    });
+                }
+            } else {
+                alert('Enter Column Name');
+            }
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function delete_row(e) {
+            $(e).closest("tr").remove();
+            submit();
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE COL FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#del_col_modal').click(function delete_col() {
+            var tble = document.getElementById('mtable');
+            var row = tble.rows; // Getting the rows 
+            var check = false;
+            var allowed = true;
+            for (var i = 0; i < row[0].cells.length; i++) {
+
+                // Getting the text of columnName 
+                var str = row[0].cells[i].innerHTML;
+                str = str.toLowerCase();
+                var userinput = $('#col_modal_column_name').val()
+                userinput = userinput.toLowerCase()
+
+                // If 'userinput' matches with the columnName  
+                if (str.localeCompare(userinput) === 0) {
+                    if (userinput.localeCompare("▬") === 0) {
+                        break;
+                    }
+                    if (userinput.localeCompare("completed") === 0 || userinput.localeCompare("customer name") === 0 || userinput.localeCompare("product name") === 0 || userinput.localeCompare("file") === 0) {
+                        alert("Column can't be deleted,\nPlease choose some other column");
+                        allowed = false;
+                        break;
+                    } else {
+                        check = true;
+                        for (var j = 0; j < row.length; j++) {
+                            // Deleting the ith cell of each row 
+                            row[j].deleteCell(i);
+                        }
+                        /*
+                         *removing column to completed orders array
+                         */
+                        var orders_arr = completed_orders_;
+                        Object.keys(orders_arr).forEach(function(key) {
+                            delete orders_arr[key][userinput];
+                        });
+                        completed_orders_ = orders_arr;
+
+                        //console.log("\n COLUMN REMOVED\n COMPLETED ORDERS UPDATED !", completed_orders_);
+
+                    }
+                }
+            }
+            if (allowed) {
+                if (check) {
+                    alert("Column is removed from the table.");
+                } else {
+                    alert("Column not found");
+                }
+            }
+        });
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////// make completed_drop_down FUNC ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function completed_drop_down(selectedval) {
+            if (selectedval.localeCompare("Completed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option selected="selected" value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("In Progress") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option selected="selected" value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("Delayed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option selected="selected" value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchange(this)"' + '>' +
+                    '<option selected="selected" value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            }
+            return dropdown;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////// dropdown color change FUNC ///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function ondropdownchangecolor(col) {
+            if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
+                $(col).closest("select").css("background-color", "rgb(0, 176, 80)");
+            }
+            if ($(col).find(":selected").text().localeCompare("In Progress") === 0) {
+                $(col).closest("select").css("background-color", "rgb(255, 192, 0)");
+            }
+            if ($(col).find(":selected").text().localeCompare("Delayed") === 0) {
+                $(col).closest("select").css("background-color", "rgb(255, 0, 0)");
+            }
+            if ($(col).find(":selected").text().localeCompare("Not Started") === 0) {
+                $(col).closest("select").css("background-color", "rgb(0, 112, 192)");
+            }
+        }
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// files_drop_down FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function files_drop_down(selectedval) {
+            var dropdown = '<select class="form-control" name="general_dropdown" id="files_dd">';
+            var attachment = "";
+            for (let i = 1; i < 11; i++) {
+                attachment = 'Attachment-' + i;
+                if (attachment.localeCompare(selectedval) === 0) {
+                    dropdown += '<option selected="selected" value="' + attachment + '">' + attachment + '</option>';
+
+                } else {
+                    dropdown += '<option value="' + attachment + '">' + attachment + '</option>';
+                }
+            }
+            return dropdown;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////// Completed col dropdown FUNC ///////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function ondropdownchange(col) {
+            if ($(col).find(":selected").text().localeCompare("Completed") === 0) {
+                submit();
+                $(col).closest("tr").remove();
+            } else {
+                ondropdownchangecolor(col);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// make_drop_down FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function make_drop_down(selectedval) {
+
+            if (selectedval.localeCompare("Completed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onload="ondropdownchangecolor(this)" onchange="ondropdownchangecolor(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option selected="selected" value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("In Progress") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option selected="selected" value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else if (selectedval.localeCompare("Delayed") === 0) {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
+                    '<option value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option selected="selected" value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            } else {
+                var dropdown = '<select class="form-control" name="general_dropdown" id="cars" onchange="ondropdownchangecolor(this)"' + '>' +
+                    '<option selected="selected" value="Not Started">Not Started</option' + '>' +
+                    '<option value="In Progress">In Progress</option' + '>' +
+                    '<option value="Delayed">Delayed</option' + '>' +
+                    '<option value="Completed">Completed</option' + '>' + '</select>';
+            }
+            return dropdown;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// make_date_selector FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function make_date_selector(date) {
+            if (date.localeCompare('') === 0) {
+                var now = new Date();
+                var day = ("0" + now.getDate()).slice(-2);
+                var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+                var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + today + '">';
+                return datepicker;
+            } else {
+
+                var bits = date.split(/\D/);
+                var datef = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
+
+                var day = ("0" + datef.getDate()).slice(-2);
+                var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+
+                var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+
+                if (date.length < 24) {
+                    datef = new Date(date);
+                    var day = ("0" + datef.getDate()).slice(-2);
+                    var month = ("0" + (datef.getMonth() + 1)).slice(-2);
+                    var datef = datef.getFullYear() + "-" + (month) + "-" + (day);
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                    return datepicker;
+                } else {
+                    var datepicker = '<input type="date" data-date-format="mm/dd/yyyy" value="' + datef + '">';
+                }
+            }
+
+            return datepicker
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// make_text_field FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function make_text_field(txt) {
+            return '<td contenteditable="true">' + txt + '</td>';
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// make_fileinput_field FUNC ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function make_fileinput_field(txt) {
+            // console.log("Input Field Text: ", txt);
+            // return '<form name="foo" method="post" enctype="multipart/form-data">' +
+            //     '<input type="file" onchange="fileupdated(this)" value="' + txt + '">' + '</form>';
+            return '<input id="file-input" type="file" name="' + txt + '" class="custom-file-upload" value="' + txt + '">';
+            // return '<form action = "/upload" method = "POST" enctype = "multipart/form-data" >' +
+            //     '<input type = "text" name = "name" placeholder = "' + txt + '" / >' +
+            //     '< br / ><input type = "file" name = "uploadedFile" / > < br / > < br / >' +
+            //     '<input type = "submit" value = "Upload File" / >' +
+            //     '</form>' +
+            //     '<form action = "/download" method = "GET" >' +
+            //     '<input type = "submit" value = "Download File" / >' +
+            //     '</form>';
+            // return '<td contenteditable="true">' + txt + '</td>';
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// load_data FUNC /////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function load_data(obj, cols) {
+
+            var employee_data = '';
+            employee_data += '<tr>';
+            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/>-</button></td>';
+
+            Object.keys(cols).forEach(function(key) {
+                if (key.localeCompare("▬") !== 0) {
+                    if (key.localeCompare("customer_name") === 0) {
+                        employee_data += '<td>' + obj[key] + '</td>';
+                    } else if (key.localeCompare("completed") === 0) {
+                        employee_data += '<td>' + completed_drop_down(obj[key]) + '</td>';
+                    } else if (key.localeCompare("file") === 0) {
+                        employee_data += '<td>' + files_drop_down(obj[key]) + '</td>';
+                    } else if (cols[key].localeCompare("text") === 0) {
+                        employee_data += make_text_field(obj[key]);
+                    } else if (cols[key].localeCompare("date") === 0) {
+                        employee_data += '<td>' + make_date_selector(obj[key]) + '</td>';
+                    } else {
+                        employee_data += '<td>' + make_drop_down(obj[key]) + '</td>';
+                    }
+                }
+            });
+
+            $('#mtable').append(employee_data);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// apply CSS FUNC /////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        function applycss_tocells() {
+            $("#mtable tbody tr").each(function() {
+                $(this).children("td").each(function() {
+
+                    //to get drop down val AND (date value iff set)
+                    if ($(this).children().first().val()) {
+                        if ($(this).children().first().val().localeCompare("Not Started") === 0) {
+                            $(this).children().closest("select").css("background-color", "rgb(0, 112, 192)");
+                        } else if ($(this).children().first().val().localeCompare("In Progress") === 0) {
+                            $(this).children().closest("select").css("background-color", "rgb(255, 192, 0)");
+
+                        } else if ($(this).children().first().val().localeCompare("Delayed") === 0) {
+                            $(this).children().closest("select").css("background-color", "rgb(255, 0, 0)");
+
+                        } else if ($(this).children().first().val().localeCompare("Completed") === 0) {
+                            $(this).children().closest("select").css("background-color", "rgb(0, 176, 80)");
+
+                        }
+                    }
+                });
+            });
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// add missing keys FUNC/////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //from=completed to=frontend
+        function fillObject(from, to) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length === 1 || to.length === 0) {
+                return to;
+            } else {
+                var max_len = 0;
+                max_len_obj = {};
+                for (const key in from) {
+                    if (Object.keys(from[key]).length > max_len) {
+                        max_len = Object.keys(from[key]).length;
+                        max_len_obj = from[key]; // completed ka longest json
+                    }
+                }
+
+                if (Object.keys(max_len_obj).length > 0) {
+                    for (const frontend_key in to) {
+                        for (const key in max_len_obj) {
+                            if (!(key in to[frontend_key])) {
+                                //alert("Entering: " +key+":"+ max_len_obj[key]);
+                                to[frontend_key][key] = max_len_obj[key];
+                            }
+
+                        }
+
+                    }
+                }
+                return to;
+            }
+        }
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Get data from DB /////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // TODO #7
+
+        //loading completed orders
+        const Http_completedorders = new XMLHttpRequest();
+        const url_completedorders = '/home/completedorders';
+        Http_completedorders.open("GET", url_completedorders);
+        Http_completedorders.send();
+
+
+        Http_completedorders.onload = (e) => {
+            var Data_completedorders = JSON.parse(Http_completedorders.responseText);
+            // console.log("\nCOMPLETED ORDERS KA DATA LOAD HOGAYA HAI !\n", Data_completedorders)
+            completed_orders_ = Data_completedorders.orders;
+        }
+
+
+        //loading customers' data
+
+
+        //loading open orders
+        const Http = new XMLHttpRequest();
+        const url = '/home/orders';
+        Http.open("GET", url);
+        Http.send();
+
+        Http.onload = (e) => {
+
+            $.get("/getcustomersname/", function(data, status) {
+                //console.log("Data: ", data, "\nStatus: ", status);
+                for (let i = 0; i < data.length; i++)
+                    $("#customers_dd").append('<option value="' + data[i].business_name + '">' + data[i].business_name + '</option>');
+            });
+
+            // $(function() {
+            //     var current = location.pathname;
+            //     console.log("location: ", current);
+            //     $('#nav li a').each(function() {
+            //         var $this = $(this);
+            //         // if the current path is like this link, make it active
+            //         if ($this.attr('href').indexOf(current) !== -1) {
+            //             console.log("href_val: ", $this.attr('href'));
+            //             $this.addClass('active');
+            //         }
+            //     });
+            // });
+
+            var Data = JSON.parse(Http.responseText);
+
+            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+
+            //setting userID
+            user_identity = Data.orders[Data.orders.length - 1].user_id;
+            //setting logo path
+            $('#storename')[0].src = Data.orders[Data.orders.length - 1].store_logo_path;
+            $('#storename')[0].alt = Data.orders[Data.orders.length - 1].store_logo;
+
+            // Removes the last object appended.
+            delete Data.orders[Data.orders.length - 1];
+
+            //creating copy of open orders to fulfill missing cols on save
+            open__orders_ = Data.orders;
+            // console.log("\n=================\original Cols \n========================\n", open__orders_);
+
+            var cols = {};
+            for (let i = 0; i < Data.types.length; i++) {
+                cols[Data.types[i].column_name] = Data.types[i].column_type
+            }
+
+            //storing cols details in global_var to use for adding rows
+            tbl_cols = cols;
+
+            const col_keys = Object.keys(cols);
+
+            for (let i = 0; i < col_keys.length; i++) {
+                col_keys[i] = col_keys[i].replaceAll("_", " ");
+                col_keys[i] = col_keys[i].toUpperCase();
+            }
+
+            //making table headers
+            var tblheaders = "<tr>";
+            for (let i = 0; i < col_keys.length; i++) {
+                tblheaders += "<th>" + col_keys[i] + "</th>"
+            }
+            tblheaders += "</tr>";
+            $('#mtableheader').append(tblheaders);
+
+
+            // TODO #6 @osaaama01
+            //looping over table's data
+            for (var i = 0; i < Data.orders.length - 1; i++) {
+                var obj = Data.orders[i];
+                load_data(obj, cols);
+            }
+
+            applycss_tocells();
+            // $('#mtable').DataTable();
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// check datatype of col /////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function check_dtype(element) {
+            var type = element.prop("tagName");
+            if (type.localeCompare("TD") === 0) {
+                return "text";
+            } else if (type.localeCompare("SELECT") === 0) {
+                return "dropdown"
+            } else if (type.localeCompare("INPUT") === 0) {
+                return "date"
+            }
+
+        }
+
+        function getPreviousValues(from, to) {
+            if (typeof(from) === undefined || from === null || typeof(to) === undefined || to === null || from.length <= 1 || to.length <= 1 || to.length > from.length) {
+                return to;
+            } else {
+                for (let k in from) {
+                    for (let l in from[k]) {
+
+                        if (to[k] === undefined)
+                            break;
+                        if (l in to[k] && !(l in datatypes)) {
+                            to[k][l] = from[k][l];
+                        }
+
+                    }
+                }
+                return to;
+            }
+        }
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Submit data of table //////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        var datatypes = {};
+
+        function submit() {
+            var keys = [],
+                arrayObj = [];
+            $("#mtable thead tr th").each(function() {
+                keys.push($(this).text());
+            });
+
+            for (let i = 0; i < keys.length; i++) {
+                keys[i] = keys[i].replace(/ /g, "_");
+            }
+
+            var cust_index = keys.indexOf("Customer");
+            var prod_index = keys.indexOf("Product");
+            if (cust_index !== -1) {
+                keys[cust_index] = "customer_name";
+            }
+            if (prod_index !== -1) {
+                keys[prod_index] = "product_name";
+            }
+
+            keys = keys.map(name => name.toLowerCase());
+
+            // console.log("keys: ", keys);
+
+            rows_count = 0;
+            $("#mtable tbody tr").each(function() {
+                var obj = {},
+                    i = 0;
+                $(this).children("td").each(function() {
+
+                    //to get drop down val AND (date value iff set)
+                    if ($(this).children().first().val()) {
+                        obj['sr_no'] = rows_count;
+                        obj[keys[i]] = $(this).children().first().val();
+                        //to get datatype of col
+                        //we will take datatype only for first row others have same data type
+                        if (rows_count === 0) {
+                            datatypes[keys[i]] = (check_dtype($(this).children().first()));
+                        }
+
+                    } else //get text inside cell
+                    {
+                        obj['sr_no'] = rows_count;
+                        obj[keys[i]] = $(this).text();
+                        //to get datatype of col
+                        if (rows_count === 0) {
+                            // console.log(keys[i]);
+                            if ($(this).children().length > 0) {
+                                //for ▬ 
+                                if ($(this).children().first().text().localeCompare("-") === 0) {
+                                    datatypes[keys[i]] = "text";
+                                } else {
+                                    //for empty date 
+                                    datatypes[keys[i]] = (check_dtype($(this).children().first()));
+                                }
+                            } else {
+                                datatypes[keys[i]] = (check_dtype($(this)));
+                            }
+                        }
+                    }
+                    i++;
+                })
+                obj['user_id'] = user_identity;
+                rows_count++;
+                arrayObj.push(obj);
+            });
+
+            // console.log("\n-------------------------------------\ndatatypes: \n", datatypes);
+
+            // console.log("\n-------------------------------------\nBEFORE: \n", arrayObj);
+
+            arrayObj = fillObject(open__orders_, arrayObj); // This will also replace some values of previous entries
+            arrayObj = fillObject(completed_orders_, arrayObj); // This will also replace some values of previous entries
+            arrayObj = getPreviousValues(open__orders_, arrayObj); // Setting previous values again for previous records
+            //arrayObj = getPreviousValues(completed_orders_,arrayObj); // Setting previous values again for previous records
+
+            //completed_orders_ = fillObject(arrayObj, completed_orders_);
+
+            // console.log("\n-------------------------------------\nAFTER: \n", arrayObj);
+
+            //removing unwanted keys
+            delete completed_orders_[completed_orders_.length - 1];
+
+            Object.keys(arrayObj).forEach(function(key) {
+                delete arrayObj[key].store_logo;
+                delete arrayObj[key].store_logo_path;
+                delete arrayObj[key].__v;
+                delete arrayObj[key]._id;
+            });
+
+            var data = {
+                    table_data: arrayObj,
+                    data_types: datatypes,
+                    completed_orders: completed_orders_
+                }
+                // console.log("\n-------------------------------------\nRETURNED DATA \n", data);
+
+            $.post("/home/orders/save", data,
+                function(data, status) {
+                    alert("Data is saved !");
+                    location.reload();
+                });
+
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Order-Management</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap.min.css"> -->
+    <link rel="stylesheet" type="text/css" href="./tablestyle.css">
+
+</head>
+
+<body>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- For icons -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+
+    <!-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap.min.js"></script> -->
+
+    <nav class="navbar  sticky-top navbar-expand-lg">
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav w-100">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Open</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/completed">Completed</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/newcustomer">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/graph">Graph</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="/logout" style="display: inline;">Logout <span class="iconify" data-icon="mdi:logout" data-inline="false"></span></a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+
+    <div class="modal" id="addcustomerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h1 id="customerform_heading" class="formheading">Add Customer</h1>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="newcustomer_form" aria-autocomplete="none" autoComplete="off" action="/uploadnewcustomer" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        <div id="newcustomer_formbody" class="form-group">
+                            <label for="business_name" class=" mt-4">Business Name</label>
+                            <input id="business_name" type="text" name="business_name" class="form-control" placeholder="Business name.." required>
+                            <div class="invalid-feedback">
+                                Please enter a customer name.
+                            </div>
+
+                            <label for="contact_name" class=" mt-4">Contact Name</label>
+                            <input id="contact_name" type="text" name="contact_name" class="form-control" placeholder="Contact name..">
+                            <div class="invalid-feedback">
+                                Please enter a customer name.
+                            </div>
+
+                            <label for="customer_address" class=" mt-4">Postal Address</label>
+                            <input id="customer_address" type="text" name="customer_address" class="form-control" placeholder="Postal address..">
+                            <div class="invalid-feedback">
+                                Please enter a customer address.
+                            </div>
+
+                            <label for="customer_email" class=" mt-4">Email Address</label>
+                            <input id="customer_email" type="email" name="customer_email" class="form-control" placeholder="name@example.com">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address.
+                            </div>
+
+                            <label for="customer_contact_no" class=" mt-4">Contact Number</label>
+                            <input id="customer_contact_no" type="tel" name="customer_contact_no" class="form-control" placeholder="(format: xxxx-xxx-xxxx)">
+                            <div class="invalid-feedback">
+                                Please enter a valid contact number.
+                            </div>
+
+                            <label for="filename_1" class=" mt-4">Attachment 1</label>
+                            <input id="filename_1" type="text" name="filename_1" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_1" onchange="uploadFile(this)" class="custom-file-input" id="file_1">
+                                <label id="file_1_label" class="custom-file-label" for="file_1">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_1"></small><br/>
+
+                            <label for="filename_2" class=" mt-4">Attachment 2</label>
+                            <input id="filename_2" type="text" name="filename_2" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_2" onchange="uploadFile(this)" class="custom-file-input" id="file_2">
+                                <label id="file_2_label" class="custom-file-label" for="file_2">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_2"></small><br/>
+
+                            <label for="filename_3" class=" mt-4">Attachment 3</label>
+                            <input id="filename_3" type="text" name="filename_3" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_3" onchange="uploadFile(this)" class="custom-file-input" id="file_3">
+                                <label id="file_3_label" class="custom-file-label" for="file_3">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_3"></small><br/>
+
+                            <label for="filename_4" class=" mt-4">Attachment 4</label>
+                            <input id="filename_4" type="text" name="filename_4" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_4" onchange="uploadFile(this)" class="custom-file-input" id="file_4">
+                                <label id="file_4_label" class="custom-file-label" for="file_4">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_4"></small><br/>
+
+                            <label for="filename_5" class=" mt-4">Attachment 5</label>
+                            <input id="filename_5" type="text" name="filename_5" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_5" onchange="uploadFile(this)" class="custom-file-input" id="file_5">
+                                <label id="file_5_label" class="custom-file-label" for="file_5">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_5"></small><br/>
+
+                            <label for="filename_6" class=" mt-4">Attachment 6</label>
+                            <input id="filename_6" type="text" name="filename_6" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_6" onchange="uploadFile(this)" class="custom-file-input" id="file_6">
+                                <label id="file_6_label" class="custom-file-label" for="file_6">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_6"></small><br/>
+
+                            <label for="filename_7" class=" mt-4">Attachment 7</label>
+                            <input id="filename_7" type="text" name="filename_7" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_7" onchange="uploadFile(this)" class="custom-file-input" id="file_7">
+                                <label id="file_7_label" class="custom-file-label" for="file_7">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_7"></small><br/>
+
+                            <label for="filename_8" class=" mt-4">Attachment 8</label>
+                            <input id="filename_8" type="text" name="filename_8" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_8" onchange="uploadFile(this)" class="custom-file-input" id="file_8">
+                                <label id="file_8_label" class="custom-file-label" for="file_8">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_8"></small><br/>
+
+                            <label for="filename_9" class=" mt-4">Attachment 9</label>
+                            <input id="filename_9" type="text" name="filename_9" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_9" onchange="uploadFile(this)" class="custom-file-input" id="file_9">
+                                <label id="file_9_label" class="custom-file-label" for="file_9">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_9"></small><br/>
+
+                            <label for="filename_10" class=" mt-4">Attachment 10</label>
+                            <input id="filename_10" type="text" name="filename_10" class="form-control" placeholder="File name..">
+                            <div class="invalid-feedback">
+                                Please enter a filename.
+                            </div>
+                            <div class="custom-file mt-4">
+                                <input type="file" name="uploadedFile" name="file_10" onchange="uploadFile(this)" class="custom-file-input" id="file_10">
+                                <label id="file_10_label" class="custom-file-label" for="file_10">Choose file...</label>
+                                <div class="invalid-feedback">Please select a file.</div>
+                            </div>
+                            <small class="text-muted" id="status_file_10"></small><br/>
+
+                        </div>
+                        <input id="addcustomerbtn" type="submit" class="btn btn-success pull-right mt-4" value="Add Customer" />
+                        <input type="button" class="btn btn-primary pull-right m-4" onclick="resetForm()" value="Reset Form">
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button id="close_form" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h4 class="modalheading">Customers Data</h4>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-md-6 mb-2">
+                <input type="text" class="form-control" id="customer_search" onkeyup="searchcustomer()" placeholder="Search business">
+            </div>
+            <div class="col-md-6 mb-2">
+                <button type="button" class="btn btn-primary pull-right" onclick="resetForm()" data-toggle="modal" data-target="#addcustomerModal">
+                    Add Customer <span class="iconify" data-icon="mdi:account-plus" data-inline="false"></span> 
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table id="mtable" class="table table-bordered tablewrapp">
+                    <thead id="mtableheader" class="thead-light">
+                    </thead>
+                    <tbody></tbody>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        selected_file = "";
+        var update_customer = 0;
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////// ADD BOOL FILES_UPDATED LIST //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //get form by name
+        const formElem = document.querySelector('form');
+        formElem.addEventListener('submit', (e) => {
+            // on form submission, prevent default
+            e.preventDefault();
+
+            // construct a FormData object, which fires the formdata event
+            new FormData(formElem);
+        });
+
+        formElem.addEventListener('formdata', (e) => {
+            //console.log('formdata fired');
+
+            // Get the form data from the event object
+            let data = e.formData;
+            var isfileupdated = [];
+            for (var counter = 1; counter < 11; counter++) {
+                if ($("label[for='file_" + counter + "']").text().localeCompare("Choose file...") === 0) {
+                    isfileupdated.push(0);
+                } else {
+                    isfileupdated.push(1);
+                }
+
+            }
+
+            //appending files data
+            data.append("isfileupdated", isfileupdated);
+            //console.log("Details of form data submitted");
+            for (var value of data.values()) {
+                //console.log(value);
+            }
+
+            // submit the data via XHR
+            let request = new XMLHttpRequest();
+            //adding callback function to loadend event
+            request.addEventListener('loadend', function() {
+                location.reload();
+            });
+            //calling different post API's depending on form type (new/update)
+            if (update_customer === 1) {
+                request.open("POST", "/updatecustomer", false);
+            } else {
+                request.open("POST", "/uploadnewcustomer", false);
+            }
+            //sending request
+            request.send(data);
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// UPLOAD CUSTOMER'S LOGO /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function uploadlogo() {
+            var x = document.createElement("INPUT");
+            x.setAttribute("type", "file");
+            x.setAttribute("id", "tempfileupload");
+            // x.style.display = 'none'; // set anchor as hidden
+            document.body.appendChild(x);
+            x.click();
+            $("#tempfileupload").change(function() {
+                //console.log("hurray");
+                var ajax = new XMLHttpRequest();
+                var formdata = new FormData();
+                formdata.append('uploadedFile', $("#tempfileupload")[0].files[0]);
+                ajax.open("POST", "/uploadlogo");
+                ajax.send(formdata);
+                // $.post("/uploadlogo", tempdata,
+                //     function(tempdata, status) {
+                //         console.log("data: ", tempdata, "status: ", status);
+                //     });
+                // return true;
+                $('#tempfileupload').remove();
+            });
+        }
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// SEARCH CUSTOMER FUNCTION ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function searchcustomer() {
+            // Declare variables
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("customer_search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("mtable");
+            tr = table.getElementsByTagName("tr");
+
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        //simplifying get element by ID
+        function _(el) {
+            return document.getElementById(el);
+        }
+
+        //Reset customer form
+        function resetForm() {
+            update_customer = 0;
+            //setting post url of form to add customer 
+            $("#newcustomer_form").attr("action", "/uploadnewcustomer");
+            $("#addcustomerbtn").val("Add Customer");
+            //making sure business name is editable
+            $("#business_name").css("pointer-events", "auto");
+            //resetting input fields
+            $("#customerform_heading").text("Add Customer");
+            _("newcustomer_form").reset();
+            //resetting selected file 
+            selected_file = "";
+            //resetting upload progress field
+            $("#newcustomer_form").find("small").text("");
+            //resetting label for file name
+            for (var i = 1; i < 11; i++) {
+                $("label[for='file_" + i + "']").text("");
+            }
+        }
+
+        function load_data(obj, cols) {
+
+            var employee_data = '';
+            employee_data += '<tr>';
+            employee_data += '<td><button class="btn btn-danger" onclick="delete_row(this)"/><span class="iconify" data-icon="mdi:delete" data-inline="false"></span></button></td>';
+            employee_data += '<td><button class="btn btn-primary" onclick="edit_row(this)" data-toggle="modal" data-target="#addcustomerModal"/><span class="iconify" data-icon="fa-solid:user-edit" data-inline="false"></span></button></td>';
+
+            cols.forEach(element => {
+                if (element.includes("filename_") && obj[element].localeCompare("") !== 0) {
+                    var filenum = element.slice(9);
+                    employee_data += '<td class="filecell" onclick="download_request(this,' + filenum + ')">' + obj[element]; + '</td>';
+                } else {
+                    employee_data += '<td>' + obj[element] + '</td>';
+                }
+            });
+
+            $('#mtable').append(employee_data);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////// Download_request for attachment /////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function download_request(e, file_num) {
+            //get business name
+            var businessname = $(e).closest("tr").children()[2].textContent;
+            var file_name = "file_" + file_num;
+            var data = {
+                business_name: businessname,
+                path: $(e).text(),
+                file: file_name
+            }
+            //console.log("File download req data: ", data);
+            $.post("/filedownload", data,
+                function(data, status) {
+                    //console.log(data);
+                    //console.log("request status is :", status);
+                    var a = document.createElement('a'); // create html element anchor
+                    a.href = '/Downloads/' + data;
+                    a.download = data; // Set the file name.
+                    a.style.display = 'none'; // set anchor as hidden
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove()
+                });
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////// Find obj keys with prefix "X" //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function findValueByPrefix(object, prefix) {
+            var lst = {};
+            for (var property in object) {
+                if (object.hasOwnProperty(property) &&
+                    property.toString().startsWith(prefix)) {
+                    lst[property] = object[property];
+                }
+            }
+            return lst;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////// Getting data from Database //////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        const Http = new XMLHttpRequest();
+        const url = '/getcustomers';
+        Http.open("GET", url);
+        Http.send();
+        Http.onload = function() {
+
+            var Data = JSON.parse(Http.responseText);
+
+            //console.log("\n=================\nLOADED DATA\n========================\n", Data);
+
+            var cols = ['business_name', 'contact_name', 'customer_address', 'customer_email', 'customer_contact_no', 'filename_1', 'filename_2', 'filename_3', 'filename_4', 'filename_5', 'filename_6', 'filename_7', 'filename_8', 'filename_9', 'filename_10']
+
+            //console.log("\n=================\nCOLUMNS\n========================\n", cols);
+
+
+            // making table headers
+            var tblheaders = '<th>' + '<span class="iconify" data-icon="mdi:delete" data-inline="false"></span>' + '</th>';
+            tblheaders += '<th>' + '<span class="iconify" data-icon="fa-solid:user-edit" data-inline="false"></span>' + '</th>';
+
+            cols.forEach(element => {
+                tblheaders += '<th>' + element.replaceAll("_", " ").toUpperCase() + '</th>';
+            });
+
+            // adding table headers under thead tag of our table
+            $('#mtableheader').append(tblheaders);
+
+
+            //looping over table's data
+            for (var i = 0; i < Data.length; i++) {
+                var obj = Data[i];
+                load_data(obj, cols);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// Uploading file Function ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function uploadFile(thisfile) {
+
+            //adding file to form data
+            var file = thisfile.files[0];
+
+            //setting label text to uploaded file name
+            // _("file_1_label").innerHTML = file.name;
+            $("label[for='" + thisfile.id + "']").text(file.name);
+
+            //making dummy form 
+            var formdata = new FormData();
+            formdata.append(thisfile.id, file);
+            selected_file = thisfile.id;
+            var ajax = new XMLHttpRequest();
+            ajax.upload.addEventListener("progress", progressHandler, false);
+            // ajax.addEventListener("load", completeHandler, false);
+            ajax.addEventListener("error", errorHandler, false);
+            ajax.addEventListener("abort", abortHandler, false);
+
+            //making dummy post
+            ajax.open("POST", "/dummyfileupload");
+            ajax.send(formdata);
+        }
+
+        // file upload progress
+        function progressHandler(event) {
+            _("status_" + selected_file).innerHTML = "Uploaded " + (event.loaded / event.total) * 100 + "%";
+        }
+
+        // error occured while file uploading 
+        function errorHandler(event) {
+            _("status_" + selected_file).innerHTML = "Upload Failed";
+        }
+
+        // file upload cancelled/aborted
+        function abortHandler(event) {
+            _("status_" + selected_file).innerHTML = "Upload Aborted";
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function edit_row(e) {
+            update_customer = 1;
+            //updating post request made on click
+            $("#newcustomer_form").attr("action", "/updatecustomer");
+            //updating button text
+            $("#addcustomerbtn").val("Update Customer");
+            //updating form heading text
+            $("#customerform_heading").text("Update Customer");
+            // getting cols
+            var cols = $(e).closest('tr').find('td');
+            // console.log("cols", cols);
+            //first two cols are just for basic delete/update operation's assistance
+            var i = 2;
+            //accessing all input fields 
+            $("form#newcustomer_form :input:not([type='file'])").each(function() {
+                if (i < 17) {
+                    var input = $(this).val(cols[i].textContent); //updating field value
+                }
+                i++;
+            });
+
+            //making sure business name is not editable
+            //$("#business_name").prop("disabled", true);
+            // var businessname = $(e).closest("tr").children()[2].textContent;
+            // data = {
+            //     business_name: businessname
+            // }
+            $("#business_name").css("pointer-events", "none");
+            // $.post("/getcustomer", data, function(data, status) {
+            //     console.log("Data: ", data, "\nStatus: ", status);
+            //     var files_list = findValueByPrefix(data[0], "file_");
+            //     // console.log("files list :", files_list);
+            //     Object.keys(files_list).forEach(element => {
+            //         var file_input = "#" + element;
+            //         console.log("File: ", files_list[element]);
+            //         $(file_input)[0].files["0"] = files_list[element];
+            //         console.log($(file_input)[0].files);
+            // console.log($("form#newcustomer_form :input([type='" + "file_input" + "'])")); //.files.append(files_list[element]);
+            // $(file_input)[0].files.uploadedFile.append(files_list[element]);
+
+            // console.log(element, "\n\nfile value: ", files_list[element].data);
+            // console.log("\nfilelist elements:\n", files_list[element]);
+            // });
+            // });
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// DELETE ROW FUNCTION ////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        function delete_row(e) {
+            //get business name
+            var businessname = $(e).closest("tr").children()[2].textContent;
+            data = {
+                business_name: businessname
+            }
+            $.post("/deletecustomer", data,
+                function(data, status) {
+                    console.log("request status is :", status);
+                    alert(businessname + "'s record is deleted !");
+                    // $(e).closest("tr").remove();
+                    location.reload();
+                });
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////// OPEN-PAGE BTN CLICK /////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#open_page_nav").click(function() {
+            location.replace("/home");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// COMPLETED-PAGE BTN CLICK ///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#completed_page_nav").click(function() {
+            location.replace("/home/completed");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// GRAPH BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#graph_btn").click(function() {
+            location.replace("/graph");
+        });
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////// LOGOUT BTN ON CLICK FUNC ////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $("#logout_btn").click(function() {
+            location.replace("/logout");
+        });
+    </script>
+</body>
